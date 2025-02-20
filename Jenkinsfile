@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     // Run tests
-                    def mvnHome = tool name: 'Apache Maven 3.9.9', type: 'maven'
+                    //def mvnHome = tool name: 'Apache Maven 3.9.9', type: 'maven'
    					sh "/home/labuser/Downloads/apache-maven-3.9.9/bin/mvn -B -DskipTests test"
                     //sh 'mvn test'
                 }
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     // Package the application
-                    def mvnHome = tool name: 'Apache Maven 3.9.9', type: 'maven'
+                    //def mvnHome = tool name: 'Apache Maven 3.9.9', type: 'maven'
    					sh "/home/labuser/Downloads/apache-maven-3.9.9/bin/mvn -B -DskipTests clean package"
                     //sh 'mvn package'
                 }
