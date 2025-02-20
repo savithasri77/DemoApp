@@ -6,6 +6,7 @@ pipeline {
             steps {
                 script {
                     // Clean and build the project using Maven
+		    maven: '/home/labuser/Downloads/apache-maven-3.9.9/bin' 
                     sh 'mvn clean install'
                 }
             }
