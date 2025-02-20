@@ -3,13 +3,8 @@ pipeline {
 
     stages {
         stage('Build') {
-            steps {
-                script {
-                    // Clean and build the project using Maven
-		  // maven: '/home/labuser/Downloads/apache-maven-3.9.9/bin' 
-                    sh 'mvn clean install'
-                }
-            }
+            def mvnHome = tool name: 'Apache Maven 3.9.9', type: 'maven'
+   			sh "${mvnHome}/bin/mvn -B -DskipTests clean package"
         }
         stage('Test') {
             steps {
