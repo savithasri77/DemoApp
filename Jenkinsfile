@@ -35,7 +35,7 @@ pipeline {
                 script {
                     // Deploy the application (this is just an example, adjust as needed)
                    // sh 'scp target/demo-0.0.1-SNAPSHOT.jar user@server:/path/to/deploy'
-                   sh "echo 'Iam in Deploy Stage'"
+                   sh "echo 'Iam in the Deploy Stage'"
                 }
             }
         }
