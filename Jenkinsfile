@@ -32,10 +32,15 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                script {
-                    // Deploy the application (this is just an example, adjust as needed)
-                   // sh 'scp target/demo-0.0.1-SNAPSHOT.jar user@server:/path/to/deploy'
-                   sh "echo 'Iam in the Deploy Stage'"
+                // Assuming you are using AWS CodeDeploy
+                withCredentials([credentials(id: '5633-4389-5413', type: 'AmazonWebServicesCredentialsBinding')]) {
+                    codeDeploy(
+                        applicationName: 'DemoAoo', 
+                        deploymentGroupName: 'DemoApp-deployment-group', 
+                        deploymentConfigName: 'CodeDeployDefault.AllAtOnce',
+                        computePlatform: 'Server', 
+                        s3Location: 's3://elasticbeanstalk-us-east-1-563343895413/DemoApp.zip' // Replace with your S3 bucket and deployment artifact
+                    )
                 }
             }
         }
