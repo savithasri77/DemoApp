@@ -33,15 +33,17 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Assuming you are using AWS CodeDeploy
-                withCredentials([credentials(id: '5633-4389-5413', type: 'AmazonWebServicesCredentialsBinding')]) {
-                    codeDeploy(
-                        applicationName: 'DemoAoo', 
-                        deploymentGroupName: 'DemoApp-deployment-group', 
-                        deploymentConfigName: 'CodeDeployDefault.AllAtOnce',
-                        computePlatform: 'Server', 
-                        s3Location: 's3://elasticbeanstalk-us-east-1-563343895413/DemoApp.zip' // Replace with your S3 bucket and deployment artifact
-                    )
+                steps {
+                // Assuming you are using AWS CodeDeploy
+                script {
+                    // Access AWS credentials (ensure properly configured in Jenkins)
+                    def awsCredentials = credentials('aws-access-key') 
+                    
+                    // Execute CodeDeploy deployment command
+                    sh "aws codedeploy deploy-application-revision --application-name Demo --deployment-group-name DemoDeploymentGroup --revision-number $(ls -l target/Demo.jar | awk '{print $NF}') --s3-location s3://elasticbeanstalk-us-east-1-563343895413/demo.jar --region us-east-1 --credentials ${awsCredentials.username}:${awsCredentials.password}"
                 }
+            }
+
             }
         }
     }
