@@ -32,17 +32,11 @@ pipeline {
         }
         stage('Deploy') {
              steps {
-                // Assuming you are using AWS CodeDeploy
                 script {
-                    // Access AWS credentials (ensure properly configured in Jenkins)
-                    def awsCredentials = credentials('aws-access-key') 
-                    
-                    // Execute CodeDeploy deployment command
-                    sh 'aws codedeploy deploy-application-revision --application-name Demo --deployment-group-name DemoDeploymentGroup --revision-number $(ls -l target/Demo.jar | awk '{print $NF}') --s3-location s3://elasticbeanstalk-us-east-1-563343895413/demo.jar --region us-east-2 --credentials ${awsCredentials.username}:${awsCredentials.password}'
-                }
-            }
-
-            }
+                    withAWS(region: 'us-east-1', credentials: 'aws-credentials-id') {
+                        s3Upload(bucket: 'elasticbeanstalk-us-east-1-563343895413', path: 'your-s3-bucket-path', includePathPattern: '**/*')
+                    }
+                
         }
     }
 
