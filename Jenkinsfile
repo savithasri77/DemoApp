@@ -31,9 +31,7 @@ pipeline {
             }
         }
         stage('Deploy') {
-            steps {
-                // Assuming you are using AWS CodeDeploy
-                steps {
+             steps {
                 // Assuming you are using AWS CodeDeploy
                 script {
                     // Access AWS credentials (ensure properly configured in Jenkins)
