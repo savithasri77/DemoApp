@@ -1,6 +1,9 @@
 pipeline {
     agent any
-	
+	environment {
+        AWS_ACCESS_KEY_ID = credentials('your-aws-access-key-id')
+        AWS_SECRET_ACCESS_KEY = credentials('your-aws-secret-access-key')
+	}
     stages {
         stage('Build') {
 			steps {
@@ -33,7 +36,7 @@ pipeline {
         stage('Deploy') {
              steps {
                 script {
-                    withAWS(region: 'us-east-1', credentials: '${AWS_USERNAME}:${AWS_SECRET}') {
+                    withAWS(region: 'us-east-1', credentials: '${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}') {
                         s3Upload(bucket: 'elasticbeanstalk-us-east-1-563343895413', path: 'your-s3-bucket-path', includePathPattern: '**/*')
                     }
                 
