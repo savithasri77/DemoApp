@@ -1,6 +1,6 @@
 pipeline {
     agent any
-
+	
     stages {
         stage('Build') {
 			steps {
@@ -33,7 +33,7 @@ pipeline {
         stage('Deploy') {
              steps {
                 script {
-                    withAWS(region: 'us-east-1', credentials: 'aws-credentials-id') {
+                    withAWS(region: 'us-east-1', credentials: '${AWS_USERNAME}:${AWS_SECRET}') {
                         s3Upload(bucket: 'elasticbeanstalk-us-east-1-563343895413', path: 'your-s3-bucket-path', includePathPattern: '**/*')
                     }
                 
